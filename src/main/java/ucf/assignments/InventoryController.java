@@ -4,13 +4,19 @@
  */
 
 /*
- Write a program that tracks your personal inventory. The program should allow you to enter an item,
- a serial number, and estimated value. The program should then be able to print out a tabular report
-  in both HTML and CSV formats that looks like this:
+Using IntelliJ and Gradle, you will create a GUI-based desktop application to allow a user to track their personal inventory.
 
-Value     Serial Number   Name
-$399.00   AXB124AXY       Xbox One
-$599.99   S40AZBDE4       Samsung TV
+The program should allow you to enter an item, a serial number, and estimated value.
+ The program should then be able to display a tabular report of the data that looks like this:
+
+    Value     Serial Number   Name
+    $399.00   AXB124AXY3      Xbox One
+    $599.99   S40AZBDE47      Samsung TV
+
+The program should also allow the user to export the data as either a tab-separated value (TSV) file, or as a HTML file.
+ When exported as an HTML file, the data should be stored inside of a table structure to mimic the displayed appearance.
+
+You will be responsible for both the design (UML diagrams) and implementation (production and test code) of this application
 
 Constraints
 
@@ -49,10 +55,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.KeyEvent;
@@ -81,9 +84,7 @@ public class InventoryController implements Initializable {
     @FXML
     private TextField nameTextField;
     @FXML
-    private TextField searchBySerialNumberTextField;
-    @FXML
-    private TextField searchByNameTextField;
+    private TextField searchTextField;
 
 
     public final ObservableList<Item> dataList = FXCollections.observableArrayList();
@@ -125,11 +126,13 @@ public class InventoryController implements Initializable {
             AlertManager.alertValue();
         } else if (ConditionsManager.validateSerialNumber(serialNumberTextField.getText())) {
             AlertManager.alertSerialNumber();
+        } else if (ConditionsManager.validateDuplicateSerialNumber(serialNumberTextField.getText(), dataList)) {
+            AlertManager.alertDuplicateSerialNumber();
         } else if (ConditionsManager.validateName(nameTextField.getText())) {
             AlertManager.alertName();
         } else {
-            Item newItem = new Item(valueTextField.getText(),
-                    serialNumberTextField.getText(),
+            Item newItem = new Item(ItemFormat.toFormattedValue(valueTextField.getText()),
+                    ItemFormat.toFormattedSerialNumber(serialNumberTextField.getText()),
                     nameTextField.getText());
 
             valueTextField.setText("$");
@@ -166,10 +169,16 @@ public class InventoryController implements Initializable {
     @FXML
     public ObservableList<Item> getPeople() {
         ObservableList<Item> item = FXCollections.observableArrayList();
-        Item example = new Item("$49.99", "HUIJO89012", "XBOX ONE");
+        ObservableList<Item> sampleList = FXCollections.observableArrayList();
 
-        item.add(example);
-        dataList.add(example);
+        sampleList.add(new Item("$149.99", "HUIJO89012", "Play Station 3"));
+        sampleList.add(new Item("$399.00", "AXB124AXY3", "Samsung TV"));
+        sampleList.add(new Item("$599.99", "S40AZBDE47", "XBOX ONE"));
+        sampleList.add(new Item("$119.99", "1234567890", "Dell Monitor"));
+        sampleList.add(new Item("$99.99", "0987654321", "Logitech Keyboard"));
+
+        item.addAll(sampleList);
+        dataList.addAll(sampleList);
 
         return item;
     }

@@ -40,21 +40,13 @@
               <MenuItem mnemonicParsing="false" onAction="#helpClicked" text="About" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" />
             <Menu mnemonicParsing="false">
                <graphic>
-                  <TextField fx:id="searchBySerialNumberTextField" onKeyTyped="#searchSerialNumberNewLetter" prefHeight="25.0" prefWidth="100.0" promptText="Serial Number" />
+                  <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="450.0" promptText="Search" />
                </graphic>
             </Menu>
-            <Menu mnemonicParsing="false">
-               <graphic>
-                  <TextField fx:id="searchByNameTextField" prefHeight="25.0" prefWidth="325.0" promptText="Name" />
-               </graphic>
-            </Menu>
-            <Menu mnemonicParsing="false">
-               <graphic>
-                  <Button mnemonicParsing="false" onAction="#searchButton" text="Search" />
-               </graphic>
-            </Menu>
+            <Menu mnemonicParsing="false" />
         </menus>
       </MenuBar>
    </top>

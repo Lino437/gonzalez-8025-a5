@@ -24,6 +24,15 @@ public class AlertManager {
         alert.showAndWait();
     }
 
+    public static void alertDuplicateSerialNumber() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Duplicate Serial Number");
+        alert.setHeaderText("Serial number is duplicated\n" +
+                "Try another Serial Number");
+
+        alert.showAndWait();
+    }
+
     public static void alertName() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Name Validator");
