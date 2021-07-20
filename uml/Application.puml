@@ -1,0 +1,43 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class InventoryTracker {
+    start()
+    main()
+}
+
+class InventoryController {
+    items: ItemModel
+
+    + MainWindowController(ItemModel, SceneManager)
+
+    addItemButton(EventHandler)
+    editItemButton(EventHandler)
+    removeItemButton(EventHandler)
+
+    addItem(String, String, BigDecimal)
+    editItem()
+}
+
+
+class FileManager {
+    formatData()
+    saveFile()
+    loadFile()
+}
+
+class ItemModel {
+    - ObservableList<Item>
+}
+
+class Item {
+    - name: SimpleStringPro
+}
+
+javafx.org.Application <|- InventoryTracker
+
+InventoryTracker -- InventoryController
+ItemModel *-- InventoryController
+ItemModel *-- Item
+
+@enduml
