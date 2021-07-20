@@ -22,21 +22,21 @@ Constraints
 
     Your application shall satisfy the following requirements:
 
-    The user shall interact with the application through a Graphical User Interface
-    The user shall be able to store at least 100 inventory items
-        Each inventory item shall have a value representing its monetary value in US dollars
-        Each inventory item shall have a unique serial number in the format of XXXXXXXXXX where X can be either a letter or digit
-        Each inventory item shall have a name between 2 and 256 characters in length (inclusive)
-    The user shall be able to add a new inventory item
-        The application shall display an error message if the user enters an existing serial number for the new item
-    The user shall be able to remove an existing inventory item
-    The user shall be able to edit the value of an existing inventory item
-    The user shall be able to edit the serial number of an existing inventory item
-        The application shall prevent the user from duplicating the serial number
-    The user shall be able to edit the name of an existing inventory item
-    The user shall be able to sort the inventory items by value
-    The user shall be able to sort inventory items by serial number
-    The user shall be able to sort inventory items by name
+   x The user shall interact with the application through a Graphical User Interface
+   x The user shall be able to store at least 100 inventory items
+      x  Each inventory item shall have a value representing its monetary value in US dollars
+      x  Each inventory item shall have a unique serial number in the format of XXXXXXXXXX where X can be either a letter or digit
+      x  Each inventory item shall have a name between 2 and 256 characters in length (inclusive)
+   x The user shall be able to add a new inventory item
+       x The application shall display an error message if the user enters an existing serial number for the new item
+   x The user shall be able to remove an existing inventory item
+   x The user shall be able to edit the value of an existing inventory item
+   x The user shall be able to edit the serial number of an existing inventory item
+       x The application shall prevent the user from duplicating the serial number
+   x The user shall be able to edit the name of an existing inventory item
+   x The user shall be able to sort the inventory items by value
+   x The user shall be able to sort inventory items by serial number
+   x The user shall be able to sort inventory items by name
     The user shall be able to search for an inventory item by serial number
     The user shall be able to search for an inventory item by name
     The user shall be able to save their inventory items to a file
@@ -55,16 +55,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.KeyEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class InventoryController implements Initializable {
-
 
     // configure the table
     @FXML
@@ -90,13 +91,46 @@ public class InventoryController implements Initializable {
     public final ObservableList<Item> dataList = FXCollections.observableArrayList();
 
 
-    public void changeValueCellEvent(TableColumn.CellEditEvent<Item, String> itemStringCellEditEvent) {
+    public void changeValueCellEvent(TableColumn.CellEditEvent editedCell) {
+        // if value entered does not meet condition, pop alert
+        if (ConditionsManager.validateValue(editedCell.getNewValue().toString())) {
+            AlertManager.alertValue();
+        } else {
+            Item itemSelected = tableView.getSelectionModel().getSelectedItem();
+            dataList.remove(itemSelected);
+
+            itemSelected.setValue(ItemFormat.toFormattedValue(editedCell.getNewValue().toString()));
+            dataList.add(itemSelected);
+
+        }
     }
 
-    public void changeSerialNumberCellEvent(TableColumn.CellEditEvent<Item, String> itemStringCellEditEvent) {
+    public void changeSerialNumberCellEvent(TableColumn.CellEditEvent editedCell) {
+        // if value entered does not meet condition, pop alert
+        if (ConditionsManager.validateSerialNumber(editedCell.getNewValue().toString())) {
+            AlertManager.alertSerialNumber();
+        } else if (ConditionsManager.validateDuplicateSerialNumber(editedCell.getNewValue().toString(), dataList)) {
+            AlertManager.alertDuplicateSerialNumber();
+        } else {
+            Item itemSelected = tableView.getSelectionModel().getSelectedItem();
+            dataList.remove(itemSelected);
+
+            itemSelected.setValue(ItemFormat.toFormattedSerialNumber(editedCell.getNewValue().toString()));
+            dataList.add(itemSelected);
+        }
     }
 
-    public void changeNameCellEvent(TableColumn.CellEditEvent<Item, String> itemStringCellEditEvent) {
+    public void changeNameCellEvent(TableColumn.CellEditEvent editedCell) {
+        // if value entered does not meet condition, pop alert
+        if (ConditionsManager.validateName(editedCell.getNewValue().toString())) {
+            AlertManager.alertName();
+        } else {
+            Item itemSelected = tableView.getSelectionModel().getSelectedItem();
+            dataList.remove(itemSelected);
+
+            itemSelected.setValue(editedCell.getNewValue().toString());
+            dataList.add(itemSelected);
+        }
     }
 
     public void newFileClicked(ActionEvent actionEvent) {
@@ -113,12 +147,20 @@ public class InventoryController implements Initializable {
     }
 
     public void helpClicked(ActionEvent actionEvent) {
+        AlertManager.alertHelp();
     }
 
     public void searchButton(ActionEvent actionEvent) {
     }
 
     public void removeItem(ActionEvent actionEvent) {
+        ObservableList<Item> allItems;
+        allItems = tableView.getItems();
+
+        // delete selected item
+        Item item = tableView.getSelectionModel().getSelectedItem();
+        allItems.remove(item);
+        dataList.remove(item);
     }
 
     public void AddNewItem(ActionEvent actionEvent) {
@@ -181,8 +223,5 @@ public class InventoryController implements Initializable {
         dataList.addAll(sampleList);
 
         return item;
-    }
-
-    public void searchSerialNumberNewLetter(KeyEvent keyEvent) {
     }
 }

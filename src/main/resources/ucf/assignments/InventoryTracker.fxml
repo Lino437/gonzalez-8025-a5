@@ -55,7 +55,7 @@
          <children>
             <VBox prefHeight="77.0" prefWidth="95.0">
                <children>
-                  <TextField fx:id="valueTextField" prefHeight="25.0" prefWidth="87.0" promptText="Value">
+                  <TextField fx:id="valueTextField" prefHeight="25.0" prefWidth="87.0" promptText="Value" text="\$">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>

@@ -41,4 +41,7 @@ public class AlertManager {
         alert.showAndWait();
     }
 
+    public static void alertHelp() {
+
+    }
 }
