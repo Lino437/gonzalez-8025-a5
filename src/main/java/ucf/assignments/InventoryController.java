@@ -37,8 +37,8 @@ Constraints
    x The user shall be able to sort the inventory items by value
    x The user shall be able to sort inventory items by serial number
    x The user shall be able to sort inventory items by name
-    The user shall be able to search for an inventory item by serial number
-    The user shall be able to search for an inventory item by name
+   x The user shall be able to search for an inventory item by serial number
+   x The user shall be able to search for an inventory item by name
     The user shall be able to save their inventory items to a file
         The user shall be able to select the file format from among the following set of options: TSV (tab-separated value), HTML, JSON
             TSV files shall shall list one inventory item per line, separate each field within an inventory item using a tab character, and end with the extension .txt
@@ -52,10 +52,11 @@ package ucf.assignments;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -150,16 +151,9 @@ public class InventoryController implements Initializable {
         AlertManager.alertHelp();
     }
 
-    public void searchButton(ActionEvent actionEvent) {
-    }
-
     public void removeItem(ActionEvent actionEvent) {
-        ObservableList<Item> allItems;
-        allItems = tableView.getItems();
-
         // delete selected item
         Item item = tableView.getSelectionModel().getSelectedItem();
-        allItems.remove(item);
         dataList.remove(item);
     }
 
@@ -177,13 +171,12 @@ public class InventoryController implements Initializable {
                     ItemFormat.toFormattedSerialNumber(serialNumberTextField.getText()),
                     nameTextField.getText());
 
-            valueTextField.setText("$");
-            serialNumberTextField.setText("");
-            nameTextField.setText("");
+            valueTextField.clear();
+            serialNumberTextField.clear();
+            nameTextField.clear();
 
             // get all the items from the table list, then add the new Item
             dataList.add(newItem);
-            tableView.getItems().add(newItem);
         }
     }
 
@@ -194,8 +187,8 @@ public class InventoryController implements Initializable {
         serialNumberColumn.setCellValueFactory(new PropertyValueFactory<>("serialNumber"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        // load data
-        tableView.setItems(getPeople());
+        // load predefined data
+        getPeople();
 
         // Allowing description and to be editable
         tableView.setEditable(true);
@@ -203,24 +196,33 @@ public class InventoryController implements Initializable {
         serialNumberColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-        // This allows the multiple rows to be selected
-        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        FilteredList<Item> filteredData = new FilteredList<>(dataList, b -> true);
+
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(item -> {
+                return ConditionsManager.searchBox(newValue, item);
+            });
+        });
+
+        SortedList<Item> sortedData = new SortedList<>(filteredData);
+
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+
+        tableView.setItems(sortedData);
     }
 
     // This method will return an ObservableList of Item objects
     @FXML
     public ObservableList<Item> getPeople() {
         ObservableList<Item> item = FXCollections.observableArrayList();
-        ObservableList<Item> sampleList = FXCollections.observableArrayList();
 
-        sampleList.add(new Item("$149.99", "HUIJO89012", "Play Station 3"));
-        sampleList.add(new Item("$399.00", "AXB124AXY3", "Samsung TV"));
-        sampleList.add(new Item("$599.99", "S40AZBDE47", "XBOX ONE"));
-        sampleList.add(new Item("$119.99", "1234567890", "Dell Monitor"));
-        sampleList.add(new Item("$99.99", "0987654321", "Logitech Keyboard"));
+        item.add(new Item("$149.99", "HUIJO89012", "Play Station 3"));
+        item.add(new Item("$399.00", "AXB124AXY3", "Samsung TV"));
+        item.add(new Item("$599.99", "S40AZBDE47", "Xbox One"));
+        item.add(new Item("$119.99", "1234567890", "Dell Monitor"));
+        item.add(new Item("$99.99", "0987654321", "Logitech Keyboard"));
 
-        item.addAll(sampleList);
-        dataList.addAll(sampleList);
+        dataList.addAll(item);
 
         return item;
     }

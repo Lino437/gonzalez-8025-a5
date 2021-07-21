@@ -5,7 +5,6 @@
 package ucf.assignments;
 
 import javafx.collections.ObservableList;
-import org.apache.commons.validator.routines.DomainValidator;
 
 import java.math.BigDecimal;
 
@@ -56,5 +55,21 @@ public class ConditionsManager {
             return true;
         }
         return false;
+    }
+
+    public static boolean searchBox(String newValue, Item item) {
+        if (newValue == null || newValue.isEmpty()) {
+            return true;
+        }
+        // compare the name and serial number to filter text
+        String lowerCaseFilter = newValue.toLowerCase();
+
+        if (item.getName().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+            return true;
+        } else if (item.getSerialNumber().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

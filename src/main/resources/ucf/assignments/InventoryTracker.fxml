@@ -40,13 +40,11 @@
               <MenuItem mnemonicParsing="false" onAction="#helpClicked" text="About" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" />
             <Menu mnemonicParsing="false">
                <graphic>
-                  <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="450.0" promptText="Search" />
+                  <TextField fx:id="searchTextField" prefHeight="25.0" prefWidth="500.0" promptText="Search by Serial Number and Name" />
                </graphic>
             </Menu>
-            <Menu mnemonicParsing="false" />
         </menus>
       </MenuBar>
    </top>
@@ -55,7 +53,7 @@
          <children>
             <VBox prefHeight="77.0" prefWidth="95.0">
                <children>
-                  <TextField fx:id="valueTextField" prefHeight="25.0" prefWidth="87.0" promptText="Value" text="\$">
+                  <TextField fx:id="valueTextField" prefHeight="25.0" prefWidth="87.0" promptText="Value">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
