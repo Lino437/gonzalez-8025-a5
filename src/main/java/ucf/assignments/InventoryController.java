@@ -41,7 +41,8 @@ Constraints
    x The user shall be able to search for an inventory item by name
     The user shall be able to save their inventory items to a file
         The user shall be able to select the file format from among the following set of options: TSV (tab-separated value), HTML, JSON
-            TSV files shall shall list one inventory item per line, separate each field within an inventory item using a tab character, and end with the extension .txt
+            TSV files shall shall list one inventory item per line, separate each field within an inventory item using a tab character,
+             and end with the extension .txt
             HTML files shall contain valid HTML and end with the extension .html
             JSON files shall contain valid JSON and end with the extension .json
         The user shall provide the file name and file location of the file to save
@@ -50,6 +51,7 @@ Constraints
  */
 package ucf.assignments;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -134,17 +136,19 @@ public class InventoryController implements Initializable {
         }
     }
 
-    public void newFileClicked(ActionEvent actionEvent) {
-
-    }
-
     public void saveAsClicked(ActionEvent actionEvent) {
+        String absolutePath = SaveFileManager.fileChooserSave();
+
+        SaveFileManager.writeToFile(dataList, absolutePath);
     }
 
     public void loadClicked(ActionEvent actionEvent) {
+        LoadFileManager.fileChooserLoad();
     }
 
     public void closeClicked(ActionEvent actionEvent) {
+        Platform.exit();
+        System.exit(0);
     }
 
     public void helpClicked(ActionEvent actionEvent) {
@@ -221,6 +225,7 @@ public class InventoryController implements Initializable {
         item.add(new Item("$599.99", "S40AZBDE47", "Xbox One"));
         item.add(new Item("$119.99", "1234567890", "Dell Monitor"));
         item.add(new Item("$99.99", "0987654321", "Logitech Keyboard"));
+
 
         dataList.addAll(item);
 
