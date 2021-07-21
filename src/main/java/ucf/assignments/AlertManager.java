@@ -53,32 +53,33 @@ public class AlertManager {
 
     // This is the help String for message
     public static String helpText() {
-        String str = "**Help: 3 step guide to perform each behavior on the application**\n" +
-                "\n" +
-                "Add Item\n" +
-                "1. Fill the boxes below which correspond to each of the attributes (Value, Serial Number, Name)\n" +
-                "2. Click Button called \"Add Item\" to include it to the table\n" +
-                "3. A new Item should appear on the bottom of the table\n" +
-                "\n" +
-                "Delete Item\n" +
-                "1. Select an item to be deleted on the table\n" +
-                "2. Click the Button delete to delete Item\n" +
-                "3. The deleted Item should be deleted from table\n" +
-                "\n" +
-                "Edit Text (Value, Serial Number, Name)\n" +
-                "1. Double-click on \"Text\" to be edited\n" +
-                "2. Update the text of the Item\n" +
-                "3. Click \"enter\" key, the text should be updated\n" +
-                "\n" +
-                "Search Item by Serial Number and Name\n" +
-                "1. Select the \"search bar\" on the top right of the App\n" +
-                "2. Update the text of the search field\n" +
-                "3. The table will update by every character entered\n" +
-                "\n" +
-                "To see this again\n" +
-                "1. Click Help menu on the top left of the page\n" +
-                "2. Click About\n" +
-                "3. This file should appear on a new window\n";
-        return str;
+        return """
+                **Help: 3 step guide to perform each behavior on the application**
+
+                Add Item
+                1. Fill the boxes below which correspond to each of the attributes (Value, Serial Number, Name)
+                2. Click Button called "Add Item" to include it to the table
+                3. A new Item should appear on the bottom of the table
+
+                Delete Item
+                1. Select an item to be deleted on the table
+                2. Click the Button delete to delete Item
+                3. The deleted Item should be deleted from table
+
+                Edit Text (Value, Serial Number, Name)
+                1. Double-click on "Text" to be edited
+                2. Update the text of the Item
+                3. Click "enter" key, the text should be updated
+
+                Search Item by Serial Number and Name
+                1. Select the "search bar" on the top right of the App
+                2. Update the text of the search field
+                3. The table will update by every character entered
+
+                To see this again
+                1. Click Help menu on the top left of the page
+                2. Click About
+                3. This information should appear on a new window
+                """;
     }
 }

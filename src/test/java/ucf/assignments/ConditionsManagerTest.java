@@ -94,10 +94,4 @@ class ConditionsManagerTest {
 
         assertEquals(expected, actual);
     }
-
-    @Test
-    @DisplayName("This test 4 values, of the search box")
-    void validateSearchBox() {
-
-    }
 }

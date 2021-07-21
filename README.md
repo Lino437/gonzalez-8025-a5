@@ -25,4 +25,4 @@ _Search Item by Serial Number and Name_
 _To see this again_
 1. Click Help on the top left of the page
 2. Click About
-3. This file should appear on a new window
+3. This information should appear on a new window

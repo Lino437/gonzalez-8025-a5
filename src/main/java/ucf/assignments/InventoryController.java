@@ -39,13 +39,13 @@ Constraints
    x The user shall be able to sort inventory items by name
    x The user shall be able to search for an inventory item by serial number
    x The user shall be able to search for an inventory item by name
-    The user shall be able to save their inventory items to a file
-        The user shall be able to select the file format from among the following set of options: TSV (tab-separated value), HTML, JSON
-            TSV files shall shall list one inventory item per line, separate each field within an inventory item using a tab character,
+   x The user shall be able to save their inventory items to a file
+       x The user shall be able to select the file format from among the following set of options: TSV (tab-separated value), HTML, JSON
+           x TSV files shall shall list one inventory item per line, separate each field within an inventory item using a tab character,
              and end with the extension .txt
-            HTML files shall contain valid HTML and end with the extension .html
-            JSON files shall contain valid JSON and end with the extension .json
-        The user shall provide the file name and file location of the file to save
+           x HTML files shall contain valid HTML and end with the extension .html
+           x JSON files shall contain valid JSON and end with the extension .json
+       x The user shall provide the file name and file location of the file to save
     The user shall be able to load inventory items from a file that was previously created by the application.
         The user shall provide the file name and file location of the file to load
  */
@@ -202,11 +202,8 @@ public class InventoryController implements Initializable {
 
         FilteredList<Item> filteredData = new FilteredList<>(dataList, b -> true);
 
-        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(item -> {
-                return ConditionsManager.searchBox(newValue, item);
-            });
-        });
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) ->
+                filteredData.setPredicate(item -> ConditionsManager.searchBox(newValue, item)));
 
         SortedList<Item> sortedData = new SortedList<>(filteredData);
 
@@ -217,7 +214,7 @@ public class InventoryController implements Initializable {
 
     // This method will return an ObservableList of Item objects
     @FXML
-    public ObservableList<Item> getPeople() {
+    public void getPeople() {
         ObservableList<Item> item = FXCollections.observableArrayList();
 
         item.add(new Item("$149.99", "HUIJO89012", "Play Station 3"));
@@ -226,9 +223,6 @@ public class InventoryController implements Initializable {
         item.add(new Item("$119.99", "1234567890", "Dell Monitor"));
         item.add(new Item("$99.99", "0987654321", "Logitech Keyboard"));
 
-
         dataList.addAll(item);
-
-        return item;
     }
 }

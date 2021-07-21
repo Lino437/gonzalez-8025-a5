@@ -21,12 +21,10 @@ public class SaveFileManager {
     public static void writeToFile(ObservableList<Item> dataList, String absolutePath) {
         String extension = FilenameUtils.getExtension(absolutePath);
 
-        if (extension.equals("txt")) {
-            writeToTSVFile(dataList, absolutePath);
-        } else if (extension.equals("html")) {
-            writeToHTMLFile(dataList, absolutePath);
-        } else if (extension.equals("json")) {
-            writeToJSONFile(storeDataJSONArray(dataList), absolutePath);
+        switch (extension) {
+            case "txt" -> writeToTSVFile(dataList, absolutePath);
+            case "html" -> writeToHTMLFile(dataList, absolutePath);
+            case "json" -> writeToJSONFile(storeDataJSONArray(dataList), absolutePath);
         }
     }
 
@@ -56,10 +54,10 @@ public class SaveFileManager {
             dos.println("Value\tSerial Number\tName\t");
 
             // loop through all your data and print it to the file
-            for (int i = 0; i < dataList.size(); i++) {
-                dos.print(dataList.get(i).getValue() + "\t");
-                dos.print(dataList.get(i).getSerialNumber() + "\t");
-                dos.print(dataList.get(i).getName() + "\t");
+            for (Item item : dataList) {
+                dos.print(item.getValue() + "\t");
+                dos.print(item.getSerialNumber() + "\t");
+                dos.print(item.getName() + "\t");
                 dos.println();
             }
             dos.close();
@@ -74,10 +72,10 @@ public class SaveFileManager {
         try {
             PrintWriter pw = new PrintWriter(new FileWriter(absolutePath));
             pw.println("<TABLE BORDER><TR><TH>Value<TH>Serial Number<TH>Name</TR>");
-            for (int i = 0; i < dataList.size(); i++) {
-                pw.println("<TR><TD>" + dataList.get(i).getValue()
-                        + "<TD>" + dataList.get(i).getSerialNumber()
-                        + "<TD>" + dataList.get(i).getName());
+            for (Item item : dataList) {
+                pw.println("<TR><TD>" + item.getValue()
+                        + "<TD>" + item.getSerialNumber()
+                        + "<TD>" + item.getName());
             }
             pw.println("</TABLE>");
             pw.close();
@@ -103,13 +101,13 @@ public class SaveFileManager {
         //json file structure
         JSONArray itemList = new JSONArray();
 
-        for (int i = 0; i < dataList.size(); i++) {
+        for (Item item : dataList) {
             // set item values
             JSONObject itemDetails = new JSONObject();
             JSONObject itemObject = new JSONObject();
-            itemDetails.put("value", dataList.get(i).getValue());
-            itemDetails.put("serialNumber", dataList.get(i).getSerialNumber());
-            itemDetails.put("name", dataList.get(i).getName());
+            itemDetails.put("value", item.getValue());
+            itemDetails.put("serialNumber", item.getSerialNumber());
+            itemDetails.put("name", item.getName());
             itemObject.put("item", itemDetails);
             //Add items to list
             itemList.add(itemObject);

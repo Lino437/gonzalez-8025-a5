@@ -31,7 +31,7 @@ public class ConditionsManager {
         }
         for (int i = 0; i < text.length(); i++) {
             // if it is neither a letter nor a digit then it will return true
-            if ((Character.isLetterOrDigit(text.charAt(i)) == false)) {
+            if ((!Character.isLetterOrDigit(text.charAt(i)))) {
                 return true;
             }
         }
@@ -40,8 +40,8 @@ public class ConditionsManager {
 
     public static boolean validateDuplicateSerialNumber(String text, ObservableList<Item> dataList) {
         if (!validateSerialNumber(text)) {
-            for (int i = 0; i < dataList.size(); i++) {
-                String str = dataList.get(i).getSerialNumber();
+            for (Item item : dataList) {
+                String str = item.getSerialNumber();
                 if (ItemFormat.toFormattedSerialNumber(text).equals(str)) {
                     return true;
                 }
@@ -51,10 +51,7 @@ public class ConditionsManager {
     }
 
     public static boolean validateName(String text) {
-        if (text.length() < 2 || text.length() > 256) {
-            return true;
-        }
-        return false;
+        return text.length() < 2 || text.length() > 256;
     }
 
     public static boolean searchBox(String newValue, Item item) {
@@ -64,12 +61,8 @@ public class ConditionsManager {
         // compare the name and serial number to filter text
         String lowerCaseFilter = newValue.toLowerCase();
 
-        if (item.getName().toLowerCase().indexOf(lowerCaseFilter) != -1) {
+        if (item.getName().toLowerCase().contains(lowerCaseFilter)) {
             return true;
-        } else if (item.getSerialNumber().toLowerCase().indexOf(lowerCaseFilter) != -1) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return item.getSerialNumber().toLowerCase().contains(lowerCaseFilter);
     }
 }

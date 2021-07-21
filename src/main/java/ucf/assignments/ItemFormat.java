@@ -7,7 +7,6 @@ package ucf.assignments;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 
 public class ItemFormat {
 
@@ -21,20 +20,21 @@ public class ItemFormat {
         } catch (Exception e) {
             System.out.println("Error converting to Big Decimal");
         }
+        assert bd != null;
         value = bd.toString();
         value = "$" + value;
         return value;
     }
 
     public static String toFormattedSerialNumber(String text) {
-        String str = "";
+        StringBuilder str = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
             if (Character.isLetter(text.charAt(i))) {
-                str += Character.toUpperCase(text.charAt(i));
+                str.append(Character.toUpperCase(text.charAt(i)));
             } else {
-                str += text.charAt(i);
+                str.append(text.charAt(i));
             }
         }
-        return str;
+        return str.toString();
     }
 }
