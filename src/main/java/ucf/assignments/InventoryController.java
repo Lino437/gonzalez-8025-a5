@@ -46,8 +46,8 @@ Constraints
            x HTML files shall contain valid HTML and end with the extension .html
            x JSON files shall contain valid JSON and end with the extension .json
        x The user shall provide the file name and file location of the file to save
-    The user shall be able to load inventory items from a file that was previously created by the application.
-        The user shall provide the file name and file location of the file to load
+   x The user shall be able to load inventory items from a file that was previously created by the application.
+       x The user shall provide the file name and file location of the file to load
  */
 package ucf.assignments;
 
@@ -139,11 +139,20 @@ public class InventoryController implements Initializable {
     public void saveAsClicked(ActionEvent actionEvent) {
         String absolutePath = SaveFileManager.fileChooserSave();
 
-        SaveFileManager.writeToFile(dataList, absolutePath);
+        // if valid absolutePath  to data on file
+        if (ConditionsManager.validateAbsolutePath(absolutePath)) {
+            SaveFileManager.writeToFile(dataList, absolutePath);
+        }
     }
 
     public void loadClicked(ActionEvent actionEvent) {
-        LoadFileManager.fileChooserLoad();
+        String absolutePath = LoadFileManager.fileChooserLoad();
+
+        // update dataList to data on file
+        if (ConditionsManager.validateAbsolutePath(absolutePath)) {
+            dataList.remove(0, dataList.size());
+            LoadFileManager.loadFile(dataList, absolutePath);
+        }
     }
 
     public void closeClicked(ActionEvent actionEvent) {
@@ -218,8 +227,8 @@ public class InventoryController implements Initializable {
         ObservableList<Item> item = FXCollections.observableArrayList();
 
         item.add(new Item("$149.99", "HUIJO89012", "Play Station 3"));
-        item.add(new Item("$399.00", "AXB124AXY3", "Samsung TV"));
-        item.add(new Item("$599.99", "S40AZBDE47", "Xbox One"));
+        item.add(new Item("$399.39", "AXB124AXY3", "Samsung TV"));
+        item.add(new Item("$599.59", "S40AZBDE47", "Xbox One"));
         item.add(new Item("$119.99", "1234567890", "Dell Monitor"));
         item.add(new Item("$99.99", "0987654321", "Logitech Keyboard"));
 

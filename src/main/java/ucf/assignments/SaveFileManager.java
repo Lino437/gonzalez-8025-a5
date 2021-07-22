@@ -97,6 +97,7 @@ public class SaveFileManager {
     }
 
     // add data to json array
+    @SuppressWarnings("unchecked")
     public static JSONArray storeDataJSONArray(ObservableList<Item> dataList) {
         //json file structure
         JSONArray itemList = new JSONArray();
@@ -112,6 +113,7 @@ public class SaveFileManager {
             //Add items to list
             itemList.add(itemObject);
         }
+
         return itemList;
     }
 }

@@ -7,37 +7,88 @@ class InventoryTracker {
 }
 
 class InventoryController {
-    items: ItemModel
-
-    + MainWindowController(ItemModel, SceneManager)
-
-    addItemButton(EventHandler)
-    editItemButton(EventHandler)
-    removeItemButton(EventHandler)
-
-    addItem(String, String, BigDecimal)
-    editItem()
+	changeValueCellEvent()
+	changeSerialNumberCellEvent()
+	changeNameCellEvent()
+	saveAsClicked()
+	loadClicked()
+	closeClicked()
+	helpClicked()
+	removeItem()
+	AddNewItem()
+	initialize()
+	getPeople()
 }
 
-
-class FileManager {
-    formatData()
-    saveFile()
-    loadFile()
+class AlertManager {
+    alertValue()
+    alertSerialNumber()
+    alertDuplicateSerialNumber()
+    alertName()
+    alertHelp()
+    helpText()
 }
 
-class ItemModel {
-    - ObservableList<Item>
+class ConditionsManager {
+	validateValue()
+	validateSerialNumber()
+	validateDuplicateSerialNumber()
+	validateName()
+	searchBox()
+	validateAbsolutePath()
 }
 
 class Item {
-    - name: SimpleStringPro
+    - value: String
+    - serialNumber: String
+    - name: String
+
+	getValue()
+	setValue()
+	getSerialNumber()
+	setSerialNumber()
+	getName()
+	setName()
+}
+
+class ItemFormat {
+	toFormattedValue()
+	toFormattedSerialNumber()
+}
+
+class LoadFileManager {
+	loadFile()
+	fileChooserLoad()
+	loadTSVFile()
+	tsvFileReader()
+	loadHTMLFile()
+	htmlFileReader()
+	loadJSONFile()
+	parseItemObject()
+}
+
+class SaveFileManager {
+	writeToFile()
+	fileChooserSave()
+	writeToTSVFile()
+	writeToHTMLFile()
+	writeToJSONFile()
+	storeDataJSONArray()
 }
 
 javafx.org.Application <|- InventoryTracker
 
 InventoryTracker -- InventoryController
-ItemModel *-- InventoryController
-ItemModel *-- Item
+
+InventoryController <- AlertManager
+InventoryController <-- ConditionsManager
+InventoryController <-- LoadFileManager
+InventoryController <-- SaveFileManager
+
+Item - InventoryController
+Item -- ConditionsManager
+Item -- LoadFileManager
+Item -- SaveFileManager
+ItemFormat - Item
 
 @enduml

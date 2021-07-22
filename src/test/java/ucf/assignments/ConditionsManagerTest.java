@@ -5,6 +5,8 @@
 
 package ucf.assignments;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ConditionsManagerTest {
 
     @Test
-    @DisplayName("This test 4 values, for which true is an invalid value and false is valid")
+    @DisplayName("true is an invalid value and false is valid")
     void validateValue() {
         List<String> values = new ArrayList<>();
         List<Boolean> expected = new ArrayList<>();
@@ -45,7 +47,7 @@ class ConditionsManagerTest {
     }
 
     @Test
-    @DisplayName("This test 4 values, for which true is an invalid value and false is valid")
+    @DisplayName("true is an invalid value and false is valid")
     void validateSerialNumber() {
         List<String> serialNumber = new ArrayList<>();
         List<Boolean> expected = new ArrayList<>();
@@ -69,7 +71,7 @@ class ConditionsManagerTest {
     }
 
     @Test
-    @DisplayName("This test 4 values, for which true is an invalid value and false is valid")
+    @DisplayName("true is an invalid value and false is valid")
     void validateName() {
         List<String> name = new ArrayList<>();
         List<Boolean> expected = new ArrayList<>();
@@ -93,5 +95,46 @@ class ConditionsManagerTest {
         }
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("true is an invalid serial Number because is duplicated and false is valid")
+    void validateDuplicateSerialNumber() {
+        ObservableList<Item> dataList = FXCollections.observableArrayList();
+
+        dataList.add(new Item("$149.99", "HUIJO89012", "Play Station 3"));
+        dataList.add(new Item("$399.39", "AXB124AXY3", "Samsung TV"));
+        dataList.add(new Item("$599.59", "S40AZBDE47", "Xbox One"));
+        dataList.add(new Item("$119.99", "1234567890", "Dell Monitor"));
+        dataList.add(new Item("$99.99", "0987654321", "Logitech Keyboard"));
+
+        assertEquals(true, ConditionsManager.validateDuplicateSerialNumber("0987654321", dataList));
+        assertEquals(true, ConditionsManager.validateDuplicateSerialNumber("HUIJO89012", dataList));
+        assertEquals(false, ConditionsManager.validateDuplicateSerialNumber("GDVCYIU373", dataList));
+        assertEquals(false, ConditionsManager.validateDuplicateSerialNumber("HUINWNCEBW", dataList));
+    }
+
+    @Test
+    @DisplayName("true is on list and false the value is not on the list")
+    void searchBox() {
+        ObservableList<Item> dataList = FXCollections.observableArrayList();
+
+        dataList.add(new Item("$149.99", "HUIJO89012", "Play Station 3"));
+
+        assertEquals(true, ConditionsManager.searchBox("", dataList.get(0)));
+        assertEquals(true, ConditionsManager.searchBox("play", dataList.get(0)));
+        assertEquals(false, ConditionsManager.searchBox(" random", dataList.get(0)));
+        assertEquals(false, ConditionsManager.searchBox(" another random", dataList.get(0)));
+
+    }
+
+    @Test
+    @DisplayName("true is a valid absolutePath and false invalid")
+    void validateAbsolutePath() {
+        assertEquals(false, ConditionsManager.validateAbsolutePath(""));
+        assertEquals(false, ConditionsManager.validateAbsolutePath(" "));
+        assertEquals(true, ConditionsManager.validateAbsolutePath("D:\\hello.txt"));
+        assertEquals(true, ConditionsManager.validateAbsolutePath("D:\\hello.json"));
+
     }
 }

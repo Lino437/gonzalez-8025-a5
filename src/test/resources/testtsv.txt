@@ -1,0 +1,6 @@
+Value	Serial Number	Name	
+$149.99	HUIJO89012	Play Station 3	
+$399.39	AXB124AXY3	Samsung TV	
+$599.59	S40AZBDE47	Xbox One	
+$119.99	1234567890	Dell Monitor	
+$99.99	0987654321	Logitech Keyboard	

@@ -65,4 +65,8 @@ public class ConditionsManager {
             return true;
         } else return item.getSerialNumber().toLowerCase().contains(lowerCaseFilter);
     }
+
+    public static boolean validateAbsolutePath(String absolutePath) {
+        return !absolutePath.isEmpty() && !absolutePath.isBlank();
+    }
 }
