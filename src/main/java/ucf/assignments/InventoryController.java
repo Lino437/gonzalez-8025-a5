@@ -170,7 +170,7 @@ public class InventoryController implements Initializable {
         dataList.remove(item);
     }
 
-    public void AddNewItem(ActionEvent actionEvent) {
+    public void addNewItem(ActionEvent actionEvent) {
         if (ConditionsManager.validateValue(valueTextField.getText())) {
             AlertManager.alertValue();
         } else if (ConditionsManager.validateSerialNumber(serialNumberTextField.getText())) {

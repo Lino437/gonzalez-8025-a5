@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ItemFormatTest {
 
@@ -34,8 +34,8 @@ class ItemFormatTest {
         expected.add("$99.99");
         expected.add("$599.99");
 
-        for (int i = 0; i < values.size(); i++) {
-            actual.add(ItemFormat.toFormattedValue(values.get(i)));
+        for (String value : values) {
+            actual.add(ItemFormat.toFormattedValue(value));
         }
 
         assertEquals(expected, actual);
@@ -57,8 +57,8 @@ class ItemFormatTest {
         expected.add("S40AZBDE47");
         expected.add("ABCDEFGHIJ");
 
-        for (int i = 0; i < serialNumber.size(); i++) {
-            actual.add(ItemFormat.toFormattedSerialNumber(serialNumber.get(i)));
+        for (String s : serialNumber) {
+            actual.add(ItemFormat.toFormattedSerialNumber(s));
         }
 
         assertEquals(expected, actual);

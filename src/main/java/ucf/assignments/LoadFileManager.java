@@ -13,9 +13,11 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class LoadFileManager {
 
@@ -105,11 +107,10 @@ public class LoadFileManager {
         } catch (Exception e) {
             System.out.println("Something went wrong loading html file");
         }
-        data.forEach(array -> System.out.println(Arrays.toString(array)));
         return data;
     }
 
-        @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     public static void loadJSONFile(ObservableList<Item> dataList, String absolutePath) {
         //JSON parser object to parse read file
         JSONParser jsonParser = new JSONParser();

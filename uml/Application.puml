@@ -15,7 +15,7 @@ class InventoryController {
 	closeClicked()
 	helpClicked()
 	removeItem()
-	AddNewItem()
+	addNewItem()
 	initialize()
 	getPeople()
 }

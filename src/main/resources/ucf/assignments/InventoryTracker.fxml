@@ -77,7 +77,7 @@
                   <Insets left="10.0" top="10.0" />
                </HBox.margin>
             </TextField>
-            <Button mnemonicParsing="false" onAction="#AddNewItem" text="Add Item">
+            <Button mnemonicParsing="false" onAction="#addNewItem" text="Add Item">
                <HBox.margin>
                   <Insets left="10.0" top="10.0" />
                </HBox.margin>

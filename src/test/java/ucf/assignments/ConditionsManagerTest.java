@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +40,8 @@ class ConditionsManagerTest {
         expected.add(true);
         expected.add(true);
 
-        for (int i = 0; i < values.size(); i++) {
-            actual.add(ConditionsManager.validateValue(values.get(i)));
+        for (String value : values) {
+            actual.add(ConditionsManager.validateValue(value));
         }
 
         assertEquals(expected, actual);
@@ -63,8 +64,8 @@ class ConditionsManagerTest {
         expected.add(true);
         expected.add(true);
 
-        for (int i = 0; i < serialNumber.size(); i++) {
-            actual.add(ConditionsManager.validateSerialNumber(serialNumber.get(i)));
+        for (String s : serialNumber) {
+            actual.add(ConditionsManager.validateSerialNumber(s));
         }
 
         assertEquals(expected, actual);
@@ -90,8 +91,8 @@ class ConditionsManagerTest {
         expected.add(true);
         expected.add(true);
 
-        for (int i = 0; i < name.size(); i++) {
-            actual.add(ConditionsManager.validateName(name.get(i)));
+        for (String s : name) {
+            actual.add(ConditionsManager.validateName(s));
         }
 
         assertEquals(expected, actual);
@@ -108,10 +109,10 @@ class ConditionsManagerTest {
         dataList.add(new Item("$119.99", "1234567890", "Dell Monitor"));
         dataList.add(new Item("$99.99", "0987654321", "Logitech Keyboard"));
 
-        assertEquals(true, ConditionsManager.validateDuplicateSerialNumber("0987654321", dataList));
-        assertEquals(true, ConditionsManager.validateDuplicateSerialNumber("HUIJO89012", dataList));
-        assertEquals(false, ConditionsManager.validateDuplicateSerialNumber("GDVCYIU373", dataList));
-        assertEquals(false, ConditionsManager.validateDuplicateSerialNumber("HUINWNCEBW", dataList));
+        assertTrue(ConditionsManager.validateDuplicateSerialNumber("0987654321", dataList));
+        assertTrue(ConditionsManager.validateDuplicateSerialNumber("HUIJO89012", dataList));
+        assertFalse(ConditionsManager.validateDuplicateSerialNumber("GDVCYIU373", dataList));
+        assertFalse(ConditionsManager.validateDuplicateSerialNumber("HUINWNCEBW", dataList));
     }
 
     @Test
@@ -121,20 +122,20 @@ class ConditionsManagerTest {
 
         dataList.add(new Item("$149.99", "HUIJO89012", "Play Station 3"));
 
-        assertEquals(true, ConditionsManager.searchBox("", dataList.get(0)));
-        assertEquals(true, ConditionsManager.searchBox("play", dataList.get(0)));
-        assertEquals(false, ConditionsManager.searchBox(" random", dataList.get(0)));
-        assertEquals(false, ConditionsManager.searchBox(" another random", dataList.get(0)));
+        assertTrue(ConditionsManager.searchBox("", dataList.get(0)));
+        assertTrue(ConditionsManager.searchBox("play", dataList.get(0)));
+        assertFalse(ConditionsManager.searchBox(" random", dataList.get(0)));
+        assertFalse(ConditionsManager.searchBox(" another random", dataList.get(0)));
 
     }
 
     @Test
     @DisplayName("true is a valid absolutePath and false invalid")
     void validateAbsolutePath() {
-        assertEquals(false, ConditionsManager.validateAbsolutePath(""));
-        assertEquals(false, ConditionsManager.validateAbsolutePath(" "));
-        assertEquals(true, ConditionsManager.validateAbsolutePath("D:\\hello.txt"));
-        assertEquals(true, ConditionsManager.validateAbsolutePath("D:\\hello.json"));
+        assertFalse(ConditionsManager.validateAbsolutePath(""));
+        assertFalse(ConditionsManager.validateAbsolutePath(" "));
+        assertTrue(ConditionsManager.validateAbsolutePath("D:\\hello.txt"));
+        assertTrue(ConditionsManager.validateAbsolutePath("D:\\hello.json"));
 
     }
 }
